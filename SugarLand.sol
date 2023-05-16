@@ -226,7 +226,7 @@ contract SugarLand is ISGR, ERC20, Ownable {
     function _transfer(address sender, address recipient, uint256 amount) internal virtual override {
         uint256 taxAmount = 0;
         bool isExcluded = isExcludedFee[sender] || isExcludedFee[recipient];
-        require(isTradeOpen, "Trading is not open!");
+        require(isTradeOpen || isExcluded, "Trading is not open!");
 
         if (!isExcluded) {
             if (_isSell(sender, recipient)) {
